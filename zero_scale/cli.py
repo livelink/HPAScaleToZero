@@ -33,7 +33,10 @@ click_log.basic_config(logger)
 @click.option('-d', '--deployment', 'deployment_name',
               default='default',
               help='The deployment to modify')
-def run(scale, period, success_threshold, namespace, hpa_name, metric_name, deployment_name):
+@click.option('-po', '--part-of', 'part_of',
+              help='The part_of value to filter against',
+              required=True)
+def run(scale, period, success_threshold, namespace, hpa_name, metric_name, deployment_name, part_of):
 
 
     params = click.get_current_context().params
