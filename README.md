@@ -100,6 +100,8 @@ spec:
         - "100"
         - -v
         - debug
+        - --part-of
+        - < APP NAME >
         image: hpa-scale-to-zero:1
         imagePullPolicy: Always
         name: hpa-scale-to-zero
