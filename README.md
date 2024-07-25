@@ -100,8 +100,8 @@ spec:
         - "100"
         - -v
         - debug
-        - --part-of
-        - < APP NAME >
+        - --filter-label
+        - < LABEL=VALUE >
         image: hpa-scale-to-zero:1
         imagePullPolicy: Always
         name: hpa-scale-to-zero
@@ -138,7 +138,7 @@ else:
 
 ### Running
 ```bash
-zero-scale --namespace <THE NAMESPACE> --hpa <THE HPA NAME> --metric-name "prometheus.googleapis.com|resque_jobs_in_queue|gauge" -v debug --period 2 --deployment <DEPLOYMENT NAME> --part-of < APP NAME >
+zero-scale --namespace <THE NAMESPACE> --hpa <THE HPA NAME> --metric-name "prometheus.googleapis.com|resque_jobs_in_queue|gauge" -v debug --period 2 --deployment <DEPLOYMENT NAME> --filter-label < LABEL=VALUE >
 ```
 
 
