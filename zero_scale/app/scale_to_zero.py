@@ -22,6 +22,7 @@ class ScaleToZero:
         self.hpa_name = params['hpa_name']
         self.metric_name = params['metric_name']
         self.deployment_name = params['deployment_name']
+        self.filter_label = params['filter_label']
 
         self.logger.debug(f'Initialized with params: %s', params)
 
@@ -38,9 +39,7 @@ class ScaleToZero:
 
     @retry(retry=retry_if_exception_type(ApiException))
     def current_metric_value(self):
-
-        metrics_url='/apis/custom.metrics.k8s.io/v1beta1/namespaces/{}/pods/*/{}'.format(self.namespace, self.metric_name)
-
+        metrics_url='/apis/custom.metrics.k8s.io/v1beta1/namespaces/{}/pods/*/{}{}' .format(self.namespace, self.metric_name , f'?labelSelector=app.kubernetes.io/{self.filter_label}' if self.filter_label else '')
         try:
             res = json.loads(self.client_api.call_api(metrics_url, 'GET', auth_settings=['BearerToken'], _preload_content=False)[0].data.decode('utf-8'))
             value = [element for element in res['items'] if element["metricName"] == self.metric_name][0]['value']
